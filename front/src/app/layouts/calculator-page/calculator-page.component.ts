@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {
+  ExchangeRate,
+  MainControllerService,
+} from '../../../services/gen-client';
 
 @Component({
   selector: 'app-calculator-page',
@@ -9,25 +13,24 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './calculator-page.component.css',
 })
 export class CalculatorPageComponent {
-  currencyList = [
-    {
-      currency: 'USD',
-      rate: 1.0,
-    },
-    {
-      currency: 'EUR',
-      rate: 0.9,
-    },
-    {
-      currency: 'GBP',
-      rate: 0,
-    },
-  ];
+  constructor(private apiService: MainControllerService) {}
 
-  selectedCurrencyFrom = this.currencyList[0];
-  selectedCurrencyTo = this.currencyList[1];
+  currencyList?: ExchangeRate[];
+  selectedCurrencyFrom = { currency: '', rate: 0 };
+  selectedCurrencyTo = { currency: '', rate: 0 };
   amountFrom = 0;
   calculatedAmountTo = 0;
+
+  ngOnInit() {
+    this.apiService.getTodaysRates().subscribe({
+      next: (response) => {
+        this.currencyList = response;
+        this.selectedCurrencyFrom = response[0];
+        this.selectedCurrencyTo = response[1];
+      },
+      error: (error) => console.error('API Error:', error),
+    });
+  }
 
   calculate() {
     this.calculatedAmountTo = parseFloat(

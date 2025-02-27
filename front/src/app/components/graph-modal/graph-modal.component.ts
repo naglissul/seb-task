@@ -1,23 +1,33 @@
-import { Component, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  CurrencyHistoryDay,
+  MainControllerService,
+} from '../../../services/gen-client';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-graph-modal',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './graph-modal.component.html',
   styleUrl: './graph-modal.component.css',
 })
 export class GraphModalComponent {
-  constructor(private dialogRef: MatDialogRef<GraphModalComponent>) {}
+  currencyHistory?: CurrencyHistoryDay[];
 
-  @Input({ required: true }) currencyId!: string;
+  constructor(
+    private dialogRef: MatDialogRef<GraphModalComponent>,
+    private apiService: MainControllerService,
+    @Inject(MAT_DIALOG_DATA) public data: { currency: string }
+  ) {}
 
   ngOnInit() {
-    //TODO: fetch history of this currency
-    console.log(
-      'GraphModalComponent initialized with currencyId:',
-      this.currencyId
-    );
+    this.apiService.getOneCurrencyHistory(this.data.currency).subscribe({
+      next: (response) => {
+        this.currencyHistory = response;
+      },
+      error: (error) => console.error('API Error:', error),
+    });
   }
 
   close() {

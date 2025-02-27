@@ -1,6 +1,6 @@
 # @
 
-Can be used by http://localhost:4200 exrates-client (front)
+Can be used by http://localhost:4200 and http://localhost exrates-client (front)
 
 The version of the OpenAPI document: 0.0.0
 

@@ -1,1 +1,3 @@
-export * from './messageDto';
+export * from './currencyHistoryDay';
+export * from './exchangeDay';
+export * from './exchangeRate';

@@ -1,72 +1,41 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { GraphModalComponent } from '../../components/graph-modal/graph-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import {
+  ExchangeRate,
+  MainControllerService,
+} from '../../../services/gen-client';
 
 @Component({
   selector: 'app-rates-page',
-  imports: [CommonModule, GraphModalComponent],
+  imports: [CommonModule, MatDialogModule],
   templateUrl: './rates-page.component.html',
   styleUrl: './rates-page.component.css',
 })
 export class RatesPageComponent {
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private apiService: MainControllerService
+  ) {}
 
-  selectedCurrencyId = '';
-  rates = [
-    {
-      currency: 'USD',
-      rate: 1.0,
-    },
-    {
-      currency: 'EUR',
-      rate: 0.9,
-    },
-    {
-      currency: 'GBP',
-      rate: 0,
-    },
-  ];
+  currencyList?: ExchangeRate[];
+  selectedCurrency = '';
 
-  ratesHistory = [
-    {
-      date: '2021-01-01',
-      rates: [
-        {
-          currency: 'USD',
-          rate: 1.0,
-        },
-        {
-          currency: 'EUR',
-          rate: 0.9,
-        },
-        {
-          currency: 'GBP',
-          rate: 0,
-        },
-      ],
-    },
-    {
-      date: '2021-01-02',
-      rates: [
-        {
-          currency: 'USD',
-          rate: 1.1,
-        },
-        {
-          currency: 'EUR',
-          rate: 0.8,
-        },
-        {
-          currency: 'GBP',
-          rate: 0.1,
-        },
-      ],
-    },
-  ];
+  ngOnInit() {
+    this.apiService.getTodaysRates().subscribe({
+      next: (response) => {
+        this.currencyList = response;
+      },
+      error: (error) => console.error('API Error:', error),
+    });
+  }
 
-  openDialog(selectedCurrencyId: string) {
-    this.selectedCurrencyId = selectedCurrencyId;
-    this.dialog.open(GraphModalComponent, { width: '400px' });
+  openDialog(selectedCurrency: string) {
+    this.selectedCurrency = selectedCurrency;
+    this.dialog.open(GraphModalComponent, {
+      width: '400px',
+      data: { currency: selectedCurrency },
+    });
   }
 }

@@ -7,7 +7,9 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
-model/messageDto.ts
+model/currencyHistoryDay.ts
+model/exchangeDay.ts
+model/exchangeRate.ts
 model/models.ts
 param.ts
 variables.ts
