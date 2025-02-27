@@ -1,6 +1,6 @@
 package sebtask.exrates.dto
 
-data class CurrencyHistoryDay(
+data class CurrencyHistoryDayDto(
     val date: String,
     val rate: Double,
 )

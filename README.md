@@ -35,6 +35,8 @@ cd back
 ```
 Open http://localhost:8080/swagger-ui/index.html
 
+H2 database at http://localhost:8080/h2-console
+
 and also
 
 ```bash
