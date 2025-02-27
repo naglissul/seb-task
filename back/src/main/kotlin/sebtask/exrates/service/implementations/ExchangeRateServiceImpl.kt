@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.w3c.dom.Document
 import org.w3c.dom.Element
+import sebtask.exrates.dto.CurrencyHistoryDay
 import sebtask.exrates.dto.ExchangeDay
 import sebtask.exrates.dto.ExchangeRate
 import sebtask.exrates.service.ExchangeDataFetcher
@@ -24,6 +25,13 @@ class ExchangeRateServiceImpl(
     override fun fetchRatesHistory(): List<ExchangeDay> {
         val xmlData = exchangeDataFetcher.fetchXmlData(exchangeHistoryXmlUrl)
         return parseHistoryXmlData(xmlData)
+    }
+
+    override fun fetchOneCurrencyHistory(currency: String): List<CurrencyHistoryDay> {
+        val xmlData = exchangeDataFetcher.fetchXmlData(exchangeHistoryXmlUrl)
+        return parseHistoryXmlData(xmlData).filter { it.rates.any { rate -> rate.currency == currency } }.map {
+            CurrencyHistoryDay(it.date, it.rates.first { rate -> rate.currency == currency }.rate)
+        }
     }
 
     private fun parseTodaysXmlData(xmlData: String): List<ExchangeRate> {
