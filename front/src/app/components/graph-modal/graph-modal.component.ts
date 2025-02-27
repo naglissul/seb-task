@@ -63,7 +63,7 @@ export class GraphModalComponent {
         this.chartOptions = {
           xAxis: {
             type: 'category',
-            data: response.map((day) => day.date),
+            data: response.map((day) => day.date).reverse(),
           },
           yAxis: {
             type: 'value',
@@ -72,7 +72,7 @@ export class GraphModalComponent {
           },
           series: [
             {
-              data: rates,
+              data: rates.reverse(),
               type: 'line',
             },
           ],
