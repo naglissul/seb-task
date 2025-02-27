@@ -12,10 +12,10 @@ class SwaggerConfig {
         OpenAPI()
             .info(
                 Info()
-                    .title("Exahange rates portal API")
+                    .title("Exchange rates portal API")
                     .version("0.0.0")
                     .description(
-                        "Can be used by http://localhost:4200 exrates-client (front)",
+                        "Can be used by http://localhost:4200 and http://localhost exrates-client (front)",
                     ),
             )
 }
