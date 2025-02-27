@@ -1,0 +1,29 @@
+<h1>Calculator</h1>
+<div class="calculator">
+  <div class="calculator__input">
+    <input
+      type="number"
+      [(ngModel)]="amountFrom"
+      placeholder="Amount"
+      (input)="calculate()"
+    />
+    <select [(ngModel)]="selectedCurrencyFrom" (change)="calculate()">
+      <option *ngFor="let currency of currencyList" [ngValue]="currency">
+        {{ currency.currency }}
+      </option>
+    </select>
+  </div>
+  <div class="calculator__output">
+    <input
+      type="number"
+      [(ngModel)]="calculatedAmountTo"
+      placeholder="Result"
+      disabled
+    />
+    <select [(ngModel)]="selectedCurrencyTo" (change)="calculate()">
+      <option *ngFor="let currency of currencyList" [ngValue]="currency">
+        {{ currency.currency }}
+      </option>
+    </select>
+  </div>
+</div>
