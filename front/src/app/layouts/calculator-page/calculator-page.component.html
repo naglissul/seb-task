@@ -1,26 +1,37 @@
-<h1>Calculator</h1>
+<h1 class="calculator__title">Calculator</h1>
 <div class="calculator">
   <div class="calculator__input">
     <input
+      class="calculator__input-field"
       type="number"
       [(ngModel)]="amountFrom"
       placeholder="Amount"
       (input)="calculate()"
     />
-    <select [(ngModel)]="selectedCurrencyFrom" (change)="calculate()">
+    <select
+      class="calculator__input-select"
+      [(ngModel)]="selectedCurrencyFrom"
+      (change)="calculate()"
+    >
       <option *ngFor="let currency of currencyList" [ngValue]="currency">
         {{ currency.currency }}
       </option>
     </select>
   </div>
+  <button (click)="reverseCurrencies()">Reverse</button>
   <div class="calculator__output">
     <input
+      class="calculator__output-field"
       type="number"
       [(ngModel)]="calculatedAmountTo"
       placeholder="Result"
       disabled
     />
-    <select [(ngModel)]="selectedCurrencyTo" (change)="calculate()">
+    <select
+      class="calculator__output-select"
+      [(ngModel)]="selectedCurrencyTo"
+      (change)="calculate()"
+    >
       <option *ngFor="let currency of currencyList" [ngValue]="currency">
         {{ currency.currency }}
       </option>

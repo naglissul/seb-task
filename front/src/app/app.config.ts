@@ -6,7 +6,11 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { httpRequestInterceptor } from '../services/http-interceptor.service';
 
 export const appConfig: ApplicationConfig = {

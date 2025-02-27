@@ -1,10 +1,13 @@
-<h1>Exchange rates</h1>
-<div class="rates">
-  <div class="rate" *ngFor="let rate of currencyList">
-    <div class="rate__currency">
-      {{ rate.currency
-      }}<button (click)="openDialog(rate.currency)">graph</button>
+<h1 class="rates-title">Exchange rates</h1>
+<p class="rates-description">In euros</p>
+<div class="rates-container">
+  <div class="rate-item" *ngFor="let rate of currencyList">
+    <div class="rate-currency">
+      {{ rate.currency }}
+      <button class="rate-button" (click)="openDialog(rate.currency)">
+        graph
+      </button>
     </div>
-    <div class="rate__value">{{ rate.rate }}</div>
+    <div class="rate-value">{{ rate.rate }}</div>
   </div>
 </div>

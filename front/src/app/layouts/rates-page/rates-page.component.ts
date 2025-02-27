@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { GraphModalComponent } from '../../components/graph-modal/graph-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
@@ -34,7 +34,7 @@ export class RatesPageComponent {
   openDialog(selectedCurrency: string) {
     this.selectedCurrency = selectedCurrency;
     this.dialog.open(GraphModalComponent, {
-      width: '400px',
+      panelClass: 'graph-modal',
       data: { currency: selectedCurrency },
     });
   }

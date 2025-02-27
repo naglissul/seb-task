@@ -40,4 +40,14 @@ export class CalculatorPageComponent {
       ).toFixed(8)
     );
   }
+
+  reverseCurrencies() {
+    const temp = this.selectedCurrencyFrom;
+    this.selectedCurrencyFrom = this.selectedCurrencyTo;
+    this.selectedCurrencyTo = temp;
+    const tempAmount = this.amountFrom;
+    this.amountFrom = this.calculatedAmountTo;
+    this.calculatedAmountTo = tempAmount;
+    this.calculate();
+  }
 }

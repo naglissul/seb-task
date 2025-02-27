@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+.graph-modal {
+  width: 90vw !important;
+  height: 80vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
