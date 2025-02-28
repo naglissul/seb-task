@@ -4,12 +4,15 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import sebtask.exrates.dto.ExchangeDayDto
 import sebtask.exrates.dto.ExchangeRateDto
+import sebtask.exrates.model.ExchangeRate
+import sebtask.exrates.repository.ExchangeRateRepository
 import sebtask.exrates.service.ExchangeDataFetcher
 import sebtask.exrates.service.implementations.ExchangeRateServiceImpl
 
 class ExchangeRateDtoServiceImplTests {
     private val mockFetcher = mockk<ExchangeDataFetcher>()
-    private val service = ExchangeRateServiceImpl(mockFetcher, "dummy-url", "dummy-url")
+    private val mockRepository = mockk<ExchangeRateRepository>()
+    private val service = ExchangeRateServiceImpl(mockFetcher, mockRepository, "dummy-url", "dummy-url")
 
     @Test
     fun `should correctly parse exchange rate XML`() {
@@ -28,6 +31,9 @@ class ExchangeRateDtoServiceImplTests {
 
         // Mock fetcher response instead of making a real HTTP request
         every { mockFetcher.fetchXmlData(any()) } returns xmlData
+        every { mockRepository.findByDate(any()) } returns emptyList()
+        every { mockRepository.findAll() } returns emptyList()
+        every { mockRepository.saveAll(any<List<ExchangeRate>>()) } returns emptyList()
 
         val result = service.fetchRatesHistory()
 
@@ -60,6 +66,8 @@ class ExchangeRateDtoServiceImplTests {
             """.trimIndent()
 
         every { mockFetcher.fetchXmlData(any()) } returns xmlData
+        every { mockRepository.findAll() } returns emptyList()
+        every { mockRepository.saveAll(any<List<ExchangeRate>>()) } returns emptyList()
 
         val result: List<ExchangeDayDto> = service.fetchRatesHistory()
 
