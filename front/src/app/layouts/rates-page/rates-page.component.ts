@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { GraphModalComponent } from '../../components/graph-modal/graph-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import {
-  ExchangeRate,
-  MainControllerService,
-} from '../../../services/gen-client';
+import { ExchangeRate } from '../../../services/gen-client';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-rates-page',
@@ -14,20 +12,14 @@ import {
   styleUrl: './rates-page.component.css',
 })
 export class RatesPageComponent {
-  constructor(
-    private dialog: MatDialog,
-    private apiService: MainControllerService
-  ) {}
+  constructor(private dialog: MatDialog, private dataService: DataService) {}
 
   currencyList?: ExchangeRate[];
   selectedCurrency = '';
 
   ngOnInit() {
-    this.apiService.getTodaysRates().subscribe({
-      next: (response) => {
-        this.currencyList = response;
-      },
-      error: (error) => console.error('API Error:', error),
+    this.dataService.rates$.subscribe((rates) => {
+      this.currencyList = rates || [];
     });
   }
 

@@ -58,6 +58,19 @@ Open http://localhost:8080/swagger-ui/index.html and http://localhost:80
 - [OpenAPI Generator](https://openapi-generator.tech/) (npm run genapi)
 - Swagger
 
+## Short summary of the functionality
+
+Backend: 
+1. On application init - fetching 90 day exrates history (fetching xml file and then parsing) and storing on h2.
+2. When todaysRates endpoint is called - first we try to fetch data from h2, if absent - fetching xml file, parsing, storing on h2, returning.
+3. When allHistory endpoint is called - we fetch from h2, if list is empty - do the step 1. and return data.
+
+Frontend:
+1. Todays rates are being fetched in the root app component, accessible publicly.
+2. Exrates and calculator pages access the one-time feched exrates data.
+3. When clicking on "graph" in exrates page - on every "open modal" event backend is being called to fetch that currency rate history.
+
+
 ## How was it done?
 
 ### Init
